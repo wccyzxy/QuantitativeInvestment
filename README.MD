@@ -2,12 +2,12 @@
 懂得都懂
 
 ## 食用说明
-运行backend.py，然后在浏览器打开http://127.0.0.1:5000/
+运行backend.py，然后在浏览器打开web目录下的mainpage.html
 
 ## 暂时划分
 计划采用前后端分离来开发，即走web那一套  
 - 后端使用python，分为逻辑部分与接口部分（虽然目前有点搅合在一起）     
-  主要采用面向对象编程。能封装为class的就封装     
+  ***主要采用面向对象编程。能封装为class的就封装***     
   大量数据的存储用pandas库       
 - 前后端沟通的接口用python的flask库来编写      
   同时需要编写一套接口规范，便于前后端并行开发     
@@ -42,9 +42,15 @@
 
 
 # 编码风格
+## ！！！
+***项目刚刚起步，随着项目的推进和扩大，以后将会不可避免地面临代码重构等等    
+一定要遵守编码风格，写可读性好的代码     
+不然就会“写码一时爽，重构火葬场”***    
+## ！！！
+
 基本采用PEP8的规则，这里只说一些关键的     
-PEP8原文：https://www.python.org/dev/peps/pep-0008/      
-简要中文翻译版：https://www.jianshu.com/p/ffcc66bab3ce      
+>PEP8原文：https://www.python.org/dev/peps/pep-0008/      
+>简要中文翻译版：https://www.jianshu.com/p/ffcc66bab3ce      
 ## 缩进
 4个空格，不是tab。VSC里面默认好像就是4空格的    
 不要tab跟空格混用，在python里头会出大问题
@@ -89,8 +95,11 @@ def give_me_money():
 
 ## 函数定义规范
 py的类型太动态了，如果不好好写好文档，容易出问题
-- 定义函数时，表明参数的类型、函数的返回值类型
+- 定义函数时，用Annotation表明参数的类型、函数的返回值类型
 - 在函数头的下方写上文档（docstring），包括：概括、参数解释（如有）、返回值解释（如有）
+
+>标注(Annotation)参阅：https://blog.csdn.net/poblg/article/details/103583671   
+>类型(typing)参阅：https://www.dazhuanlan.com/2020/02/02/5e368aafec947/       
 
 ~~~python
 # 不行，前面还能猜到是数字，但color会是啥玩意？
@@ -115,8 +124,7 @@ def draw_rectangle(x:float, y:float, width:float, height:float, color:str) -> in
 >函数的类型标注
 >>标注的目的主要是方便linter进行代码提示和自动补全    
 >>python的类型无法过于精确，对于嵌套复杂的（如list里面套dict，dict里面又套list...），最多写一两层意思意思就行（如`List[dict]`）     
->>标注(Annotation)参阅：https://blog.csdn.net/poblg/article/details/103583671   
->>类型(typing)参阅：https://www.dazhuanlan.com/2020/02/02/5e368aafec947/       
+
 >>
 >    
 
