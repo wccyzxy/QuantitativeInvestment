@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="{{ url_for('static', filename = 'jquery-3.5.1.js') }}"></script>
+    <!-- <script src="../static/jquery-3.5.1.js"></script> -->
+    <script>
+        // 页面初始化相关
+        $(document).ready(function () {
+            // 设置日期的初始值
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $("#form-date-input").val(today)
+
+            // 一些响应函数
+            $("#add-record").click(function () {
+                $("#add-record-form").show();
+            });
+        });
+
+        // 提交表单前的输入检查
+        function AddFormCheck() {
+            var formObj = {};
+            var arr = $("#add-record-form").serializeArray();
+            $(arr).each(function () { formObj[this.name] = this.value });
+            // 输入检查
+            if (formObj.cash == "" || formObj.date=="") {
+                alert("不能为空");
+                return false;
+            }
+            else if (formObj.cash <= 0) {
+                alert("不能为负数");
+                return false
+            }
+            // 日期检查
+            if (new Date(formObj.date) > new Date()) {
+                alert("不要试图穿越时空");
+                return false;
+            }
+            console.log(formObj);
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="main-wapper">
+        <div id="left-navibar">
+        </div>
+
+
+        <div id="right-records">
+            <div id="records-container">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>日期</th>
+                        <th>金额</th>
+                    </tr>
+                    {% for idx,date,cash in records.itertuples() %}
+                    <tr>
+                        <td>{{ idx }}</td>
+                        <td>{{ date }}</td>
+                        <td>{{ cash }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <button id="add-record">添加投资记录</button>
+            <form id="add-record-form" action="http://localhost:5000/record/add" method="POST" name="record" style="display: none;"
+                onsubmit="return AddFormCheck()">
+                <p>
+                    <input type="radio" name="action" value="invest" checked="checked">投入
+                    <input type="radio" name="action" value="take_back">收回
+                </p>
+                <p>日期<input id="form-date-input" type="date" name="date" value=""></p>
+                <p>金额<input type="number" name="cash" value="0"></p>
+                <input type="submit" value="提交" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
