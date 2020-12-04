@@ -5,22 +5,7 @@
 <head>
     <script src="jquery-3.5.1.js"></script>
     <script>
-        // 拉取投资记录，显示在网页上
-        $.get(
-            "http://localhost:5000/record",
-            // { name: '' },
-            function (response) {
-                if (response.status != "ok") {
-                    alert("错误");
-                    return;
-                }
-                console.log(response);
-                // 显示在网页上
-                for (const idx in response.data)
-                    AddRecordTable(idx, response.data[idx].Date, response.data[idx].CashFlow);
-            },
-            "json"
-        );
+        LoadRecordTable();
 
         // 页面初始化相关
         $(document).ready(function () {
@@ -47,13 +32,36 @@
                     "http://localhost:5000/record/add",
                     formObj,
                     function () {
-                        var idx = $("#add-record-form").children("table").children().length;
-                        AddRecordTable(idx, formObj.date, formObj.cash);
+                        // var idx = $("#add-record-form").children("table").children().length;
+                        // AddRecordTable(idx, formObj.date, formObj.cash);
+                        LoadRecordTable();
                         console.log("成功");
                     },
                 );
+                return false;
             });
         });
+
+        function LoadRecordTable(){
+            $("#records-container").children("table").html('')
+            // 拉取投资记录，显示在网页上
+            $.get(
+                "http://localhost:5000/record",
+                // { name: '' },
+                function (response) {
+                    if (response.status != "ok") {
+                        alert("错误");
+                        return;
+                    }
+                    console.log(response);
+                    // 显示在网页上
+                    for (const idx in response.data)
+                        AddRecordTable(idx, response.data[idx].Date, response.data[idx].CashFlow);
+                },
+                "json"
+            );
+
+        }
 
         // 向投资表格里添加记录
         function AddRecordTable(idx, date, cash) {
@@ -110,13 +118,13 @@
                 </table>
             </div>
             <button id="add-record">添加投资记录</button>
-            <form id="add-record-form">
+            <form id="add-record-form" style="display: none;">
                 <p>
                     <input type="radio" name="action" value="invest" checked="checked">投入
                     <input type="radio" name="action" value="take_back">收回
                 </p>
                 <p>日期<input id="form-date-input" type="date" name="date" value=""></p>
-                <p>金额<input type="number" name="cash" value="0"></p>
+                <p>金额<input type="number" name="cash" value="1"></p>
                 <button id="add-record-form-submit">提交</button>
             </form>
         </div>
