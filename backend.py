@@ -63,13 +63,13 @@ def add_records():
     # return 'ok'
 
 
-@app.route('/')
-@cross_origin()
-def main():
-    render_dict = {
-        'records': b.data
-    }
-    return flask.render_template('mainpage.html', **render_dict)
+# @app.route('/')
+# @cross_origin()
+# def main():
+#     render_dict = {
+#         'records': b.data
+#     }
+#     return flask.render_template('mainpage.html', **render_dict)
 
 
 if __name__ == "__main__":
