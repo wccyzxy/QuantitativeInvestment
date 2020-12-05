@@ -59,8 +59,8 @@ def add_records():
     else:
         return 'error'
     print(b.data)
-    return flask.redirect('/')
-    # return 'ok'
+    # return flask.redirect('/')
+    return 'ok'
 
 
 # @app.route('/')
