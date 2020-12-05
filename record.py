@@ -3,7 +3,8 @@ import datetime
 from typing import Any, Dict, List
 from typing_extensions import Literal
 import pandas as pd
-
+import numpy as np
+import statistics
 
 class Book:
     '''
@@ -72,6 +73,17 @@ class Fund:
     def update_data(self):
         pass
 
+    def max_drawdown(list):
+        '''
+        最大回撤率
+        '''
+        i=np.argmax((np.maximun.accumulate(list)-list)/np.maximum.accumulate(list))    #结束位置
+        if i==0:
+            return 0
+        j=np.argmax(list[:i])    #开始位置
+        return (list[j]-list[i])/(list[j])
+
+
 
 class User:
     '''
@@ -103,6 +115,18 @@ class User:
 
     def delete_record(self, target_book: str):
         pass
+
+    def get_stdev(list):
+        '''
+        计算样本标准差
+        '''
+        return statistics.stdev(list)
+    
+    def get_stdevp(list):
+        '''
+        计算整体标准差
+        '''
+        return statistics.pstdev(list)
 
     def to_dict(self) -> Dict[str, list]:
         result = {}
