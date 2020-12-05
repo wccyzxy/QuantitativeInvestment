@@ -5,6 +5,7 @@ from typing_extensions import Literal
 import pandas as pd
 import numpy as np
 import statistics
+from scipy import optimize
 
 class Book:
     '''
@@ -41,6 +42,49 @@ class Book:
         self.data = self.data.append({'Date': pd.to_datetime(date), 'CashFlow': money},
                                      ignore_index=True)
 
+    def get_statistics(self):
+        '''
+        计算本金，收益，算术收益
+
+        Params
+        --------
+        capital : 本金；
+        profit : 收益
+        arithmetical_profit ：  算术收益
+        '''
+        capital=0
+        profit=0    
+        arithmetical_profit=0   
+        for (date,money) in self.data:
+            if money < 0:
+                capital+=-money
+            else:
+                profit+=money
+        profit-=capital
+        arithmetical_profit=profit/capital
+        return (capital,profit,arithmetical_profit)
+    
+    def xirr(self):
+        '''
+        计算xirr收益
+
+        Params
+        --------
+        xirr_profit: xirr收益
+        guess: 对函数 xirr 计算结果的估计值
+        '''
+        guess = 0.1
+        try:
+            return optimize.newton(lambda r: xnpv(r,self.data),guess)
+        except:
+            print('Calc Wrong')
+    
+    def xnpv(rate, cashflows):
+        '''
+        用于计算xirr相关
+        '''
+        return sum([cf/(1+rate)**((t-cashflows[0][0]).days/365.0) for (t,cf) in cashflows])    
+
     def to_dict(self) -> List[Dict[str, Any]]:
         '''
         返回一系列dict
@@ -76,12 +120,29 @@ class Fund:
     def max_drawdown(list):
         '''
         最大回撤率
+
+        Params
+        --------
+        i : 结束位置
+        j : 开始位置 
         '''
-        i=np.argmax((np.maximun.accumulate(list)-list)/np.maximum.accumulate(list))    #结束位置
+        i=np.argmax((np.maximun.accumulate(list)-list)/np.maximum.accumulate(list))
         if i==0:
             return 0
-        j=np.argmax(list[:i])    #开始位置
+        j=np.argmax(list[:i])
         return (list[j]-list[i])/(list[j])
+    
+    def get_stdev(list):
+        '''
+        计算样本标准差
+        '''
+        return statistics.stdev(list)
+    
+    def get_stdevp(list):
+        '''
+        计算整体标准差 
+        '''
+        return statistics.pstdev(list)
 
 
 
@@ -115,18 +176,6 @@ class User:
 
     def delete_record(self, target_book: str):
         pass
-
-    def get_stdev(list):
-        '''
-        计算样本标准差
-        '''
-        return statistics.stdev(list)
-    
-    def get_stdevp(list):
-        '''
-        计算整体标准差 
-        '''
-        return statistics.pstdev(list)
 
     def to_dict(self) -> Dict[str, list]:
         result = {}
