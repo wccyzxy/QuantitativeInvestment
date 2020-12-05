@@ -64,15 +64,15 @@ def add_records():
     # return 'ok'
 
 
-@app.route('/')
-@cross_origin()
-def main():
-    statistics = b.get_statistics()
-    render_dict = {
-        'records': b.data,
-        'statistics': statistics
-    }
-    return flask.render_template('mainpage.html', **render_dict)
+# @app.route('/')
+# @cross_origin()
+# def main():
+#     statistics = b.get_statistics()
+#     render_dict = {
+#         'records': b.data,
+#         'statistics': statistics
+#     }
+#     return flask.render_web('mainpage.html', **render_dict)
 
 
 if __name__ == "__main__":
