@@ -60,19 +60,26 @@ def add_records():
     else:
         return 'error'
     print(b.data)
-    return flask.redirect('/')
-    # return 'ok'
+    # return flask.redirect('/')
+    return 'ok'
 
 
 # @app.route('/')
 # @cross_origin()
 # def main():
+<<<<<<< HEAD
 #     statistics = b.get_statistics()
 #     render_dict = {
 #         'records': b.data,
 #         'statistics': statistics
 #     }
 #     return flask.render_web('mainpage.html', **render_dict)
+=======
+#     render_dict = {
+#         'records': b.data
+#     }
+#     return flask.render_template('mainpage.html', **render_dict)
+>>>>>>> 1a9d41dbb8deafd5788919d10a5fcbc75f316908
 
 
 if __name__ == "__main__":
