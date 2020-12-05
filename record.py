@@ -124,7 +124,7 @@ class User:
     
     def get_stdevp(list):
         '''
-        计算整体标准差
+        计算整体标准差 
         '''
         return statistics.pstdev(list)
 
