@@ -40,6 +40,27 @@ class Book:
         self.data = self.data.append({'Date': pd.to_datetime(date), 'CashFlow': money},
                                      ignore_index=True)
 
+    def get_statistics(self):
+        '''
+        计算本金，收益，算术收益
+        Params
+        --------
+        capital : 本金；
+        profit : 收益
+        arithmetical_profit ：  算术收益
+        '''
+        capital=0
+        profit=0    
+        arithmetical_profit=0   
+        for idx,t,cf in self.data.itertuples():
+            if cf < 0:
+                capital+=-cf
+            else:
+                profit+=cf
+        profit-=capital
+        arithmetical_profit=profit/capital
+        return {'capital':capital,'profit':profit,'ari_profit':arithmetical_profit}
+
     def to_dict(self) -> List[Dict[str, Any]]:
         '''
         返回一系列dict

@@ -42,10 +42,9 @@
             }
             console.log(formObj);
             return true;
-        }
+        }        
     </script>
 </head>
-
 <body>
     <div id="main-wapper">
         <div id="left-navibar">
@@ -69,10 +68,12 @@
                     {% endfor %}
                 </table>
                 <div>
-                    <b>本金：</b><br>
-                    <b>收益：</b><br>
-                    <b>算术收益：</b><br>
-                    <b>xirr收益：</b>
+                    <br>
+                    <b id="capital">本金：</b>{{statistics.capital}}<br>
+                    <b id="profit">收益：</b>{{statistics.profit}}<br>
+                    <b id="ari_profit">算术收益：</b>{{statistics.ari_profit}}<br>
+                    <b id="xirr">xirr收益：</b><br>
+                    <br>
                 </div>
             </div>
             <button id="add-record">添加投资记录</button>

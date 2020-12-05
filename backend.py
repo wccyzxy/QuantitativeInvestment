@@ -23,9 +23,10 @@ def get_records():
     '''
     # username = flask.request.args['username']
     record_data = b.data.to_dict(orient='records')
+    statistics = b.data.get_statistics()
     response = {
         'status': 'ok',
-        'data': record_data,
+        'data': record_data
     }
     return response
 
@@ -66,8 +67,10 @@ def add_records():
 @app.route('/')
 @cross_origin()
 def main():
+    statistics = b.get_statistics()
     render_dict = {
-        'records': b.data
+        'records': b.data,
+        'statistics': statistics
     }
     return flask.render_template('mainpage.html', **render_dict)
 
