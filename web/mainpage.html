@@ -110,19 +110,22 @@
                         <th>日期</th>
                         <th>金额</th>
                     </tr>
-                    <!-- <tr>
+                    {% for idx,date,cash in records.itertuples() %}
+                    <tr>
                         <td>{{ idx }}</td>
                         <td>{{ date }}</td>
                         <td>{{ cash }}</td>
-                    </tr> -->
+                    </tr>
+                    {% endfor %}
                 </table>
-            </div>
-            <div>
-                <b>本金：</b><br>
-                <b>收益：</b><br>
-                <b>算术收益：</b><br>
-                <b>xirr收益：</b>
-            </div>
+                <div>
+                    <br>
+                    <b id="capital">本金：</b>{{statistics.capital}}<br>
+                    <b id="profit">收益：</b>{{statistics.profit}}<br>
+                    <b id="ari_profit">算术收益：</b>{{statistics.ari_profit}}<br>
+                    <b id="xirr">xirr收益：</b><br>
+                    <br>
+                </div>
             <button id="add-record">添加投资记录</button>
             <form id="add-record-form" style="display: none;">
                 <p>
