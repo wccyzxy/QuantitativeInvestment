@@ -81,7 +81,7 @@ class Book:
     
     def xnpv(rate, cashflows):
         '''
-        用于计算xirr相关
+        用于计算xirr相关的函数
         '''
         return sum([cf/(1+rate)**((t-cashflows[0][0]).days/365.0) for (t,cf) in cashflows])    
 
